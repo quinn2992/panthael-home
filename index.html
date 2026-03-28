@@ -336,7 +336,8 @@
     'daily-readings': {
       title: 'Daily Readings',
       desc: 'Daily Catholic Mass readings displayed in the New Living Translation. Built with Next.js and powered by API.Bible.',
-      url: 'https://dailyreadings.panthael.ai',
+      url: 'https://readings.panthael.ai',
+      github: 'https://github.com/quinn2992/daily-readings',
       tags: ['Next.js · Vercel'],
       live: true,
       order: 1,
@@ -354,6 +355,7 @@
       desc: 'Accessibility re-checker tool built for Acadea customers to verify ADA compliance across their CurriQUnet instances.',
       tags: ['Acadea · Internal'],
       url: 'https://ada.panthael.ai/',
+      live: true,
       order: 3,
     },
     'acadea-cali-trip': {
@@ -361,6 +363,7 @@
       desc: 'Interactive itinerary and route planner for a week-long California customer visit covering EBRs across community colleges.',
       tags: ['Trip Planner'],
       url: 'https://calitrip.panthael.ai/',
+      live: true,
       order: 4,
     },
     'wife-date-reminder': {
@@ -368,6 +371,7 @@
       desc: 'A personal reminder tool — because some things are too important to forget.',
       tags: ['Personal'],
       url: 'https://dates.panthael.ai/',
+      live: true,
       order: 5,
     },
   };
@@ -418,6 +422,14 @@
       if (!res.ok) throw new Error(`GitHub API ${res.status}`);
       const repos = await res.json();
 
+      // Add synthetic entries for enriched repos not returned by the API (e.g. private repos)
+      const apiNames = new Set(repos.map(r => r.name));
+      Object.entries(ENRICHMENT).forEach(([name, e]) => {
+        if (!apiNames.has(name)) {
+          repos.push({ name, fork: false, language: null, html_url: e.github || `https://github.com/${GITHUB_USER}/${name}`, updated_at: '' });
+        }
+      });
+
       // Sort: enriched repos by order first, then remaining by last updated
       repos.sort((a, b) => {
         const oa = ENRICHMENT[a.name]?.order ?? 999;
@@ -426,8 +438,10 @@
         return new Date(b.updated_at) - new Date(a.updated_at);
       });
 
-      // Skip forks unless enriched
-      const filtered = repos.filter(r => !r.fork || ENRICHMENT[r.name]);
+      const HIDDEN = new Set(['panthael-home']);
+
+      // Skip forks unless enriched; skip hidden repos
+      const filtered = repos.filter(r => !HIDDEN.has(r.name) && (!r.fork || ENRICHMENT[r.name]));
 
       grid.innerHTML = filtered.map((r, i) => buildCard(r, i)).join('');
       loading.style.display = 'none';
