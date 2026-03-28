@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panthael.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  :root {
+    --bone: #f5f0e8;
+    --ink: #1a1714;
+    --warm-gray: #8a8278;
+    --accent: #b8860b;
+    --accent-soft: rgba(184,134,11,0.12);
+    --card-bg: rgba(255,252,247,0.7);
+    --card-border: rgba(26,23,20,0.06);
+    --shadow: 0 1px 3px rgba(26,23,20,0.04), 0 8px 24px rgba(26,23,20,0.06);
+    --shadow-hover: 0 2px 8px rgba(26,23,20,0.06), 0 16px 40px rgba(26,23,20,0.1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bone);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .bg-shape {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-shape--1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(184,134,11,0.15), transparent 70%);
+    top: -200px; right: -100px;
+    animation: drift1 25s ease-in-out infinite;
+  }
+  .bg-shape--2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(139,90,43,0.1), transparent 70%);
+    bottom: -150px; left: -100px;
+    animation: drift2 30s ease-in-out infinite;
+  }
+  @keyframes drift1 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(-40px, 30px) scale(1.05); }
+  }
+  @keyframes drift2 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(30px, -20px) scale(0.95); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 100px 0 60px;
+    text-align: center;
+  }
+  .hero__wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out 0.1s forwards;
+  }
+  .hero__wordmark span { color: var(--accent); }
+  .hero__sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--warm-gray);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out 0.3s forwards;
+  }
+  .hero__meaning {
+    margin-top: 28px;
+    font-size: 0.82rem;
+    color: var(--warm-gray);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out 0.5s forwards;
+  }
+  .hero__meaning em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .hero__divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    margin: 32px auto 0;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out 0.6s forwards;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 32px;
+    padding-left: 2px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out 0.7s forwards;
+  }
+
+  /* ── Loading ── */
+  .loading {
+    text-align: center;
+    padding: 60px 0;
+    color: var(--warm-gray);
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out 0.8s forwards;
+  }
+  .loading__dots::after {
+    content: '';
+    animation: dots 1.4s steps(4,end) infinite;
+  }
+  @keyframes dots {
+    0% { content: ''; }
+    25% { content: '.'; }
+    50% { content: '..'; }
+    75% { content: '...'; }
+  }
+
+  /* ── Project grid ── */
+  .projects {
+    padding: 48px 0 80px;
+    display: grid;
+    gap: 20px;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.5s ease-out forwards;
+  }
+
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(184,134,11,0.2);
+  }
+
+  .project-card__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.35rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .project-card__desc {
+    font-size: 0.88rem;
+    color: var(--warm-gray);
+    line-height: 1.55;
+    margin-top: 6px;
+    max-width: 520px;
+  }
+
+  .project-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  .tag--lang { background: var(--accent-soft); color: var(--accent); }
+  .tag--live { background: rgba(34,139,34,0.08); color: #2d8a2d; }
+  .tag--tool { background: rgba(26,23,20,0.05); color: var(--warm-gray); }
+
+  .project-card__arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 4px;
+    transition: all 0.3s ease;
+  }
+  .project-card:hover .project-card__arrow { background: var(--accent); }
+  .project-card__arrow svg {
+    width: 16px; height: 16px;
+    stroke: var(--accent);
+    transition: stroke 0.3s ease;
+  }
+  .project-card:hover .project-card__arrow svg { stroke: var(--bone); }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 0 0 60px;
+    opacity: 0;
+  }
+  .footer.visible { animation: fadeUp 0.6s ease-out forwards; }
+  .footer__line {
+    width: 48px; height: 1px;
+    background: var(--card-border);
+    margin: 0 auto 20px;
+  }
+  .footer__text {
+    font-size: 0.78rem;
+    color: var(--warm-gray);
+    letter-spacing: 0.04em;
+  }
+  .footer__text a { color: var(--accent); text-decoration: none; }
+  .footer__text a:hover { text-decoration: underline; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 72px 0 40px; }
+    .project-card { padding: 22px 20px; grid-template-columns: 1fr; }
+    .project-card__arrow { display: none; }
+    .projects { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-shape bg-shape--1"></div>
+<div class="bg-shape bg-shape--2"></div>
+
+<div class="container">
+
+  <header class="hero">
+    <h1 class="hero__wordmark">Panthael<span>.</span>ai</h1>
+    <p class="hero__sub">Projects &amp; tools by Quinn</p>
+    <p class="hero__meaning">From Sindarin — <em>Pant</em> (full) + <em>Hael</em> (wise) — "Fullwise"</p>
+    <div class="hero__divider"></div>
+  </header>
+
+  <p class="section-label">Projects</p>
+
+  <div id="projects-loading" class="loading">
+    Loading projects<span class="loading__dots"></span>
+  </div>
+
+  <section id="projects-grid" class="projects" style="display:none;"></section>
+
+  <footer id="footer" class="footer">
+    <div class="footer__line"></div>
+    <p class="footer__text">Built in Saigon · <a href="https://github.com/quinn2992" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  const GITHUB_USER = 'quinn2992';
+
+  // ╭──────────────────────────────────────────────────────────────────╮
+  // │  ENRICHMENT CONFIG                                              │
+  // │                                                                 │
+  // │  To add a new project with rich metadata, just add an entry     │
+  // │  here keyed by the GitHub repo name. Any repo NOT listed        │
+  // │  still appears automatically with its GitHub description.       │
+  // │                                                                 │
+  // │  Fields:                                                        │
+  // │    title  - Display name (otherwise derived from repo slug)     │
+  // │    desc   - Description (otherwise uses GitHub description)     │
+  // │    url    - Live URL (otherwise links to GitHub repo)           │
+  // │    tags   - Extra tags like framework or category               │
+  // │    live   - true = shows green "Live" badge                     │
+  // │    order  - Sort priority (lower = higher on page)              │
+  // ╰──────────────────────────────────────────────────────────────────╯
+
+  const ENRICHMENT = {
+    'daily-readings': {
+      title: 'Daily Readings',
+      desc: 'Daily Catholic Mass readings displayed in the New Living Translation. Built with Next.js and powered by API.Bible.',
+      url: 'https://dailyreadings.panthael.ai',
+      tags: ['Next.js · Vercel'],
+      live: true,
+      order: 1,
+    },
+    'higher-ed-saas-map': {
+      title: 'Higher Ed SaaS Map',
+      desc: 'Interactive industry map of B2B SaaS vendors serving higher education — curriculum management, SIS, LMS, and more.',
+      url: 'https://higheredsaas.panthael.ai',
+      tags: ['Vercel'],
+      live: true,
+      order: 2,
+    },
+    'ada-checker': {
+      title: 'ADA Checker',
+      desc: 'Accessibility re-checker tool built for Acadea customers to verify ADA compliance across their CurriQUnet instances.',
+      tags: ['Acadea · Internal'],
+      order: 3,
+    },
+    'acadea-cali-trip': {
+      title: 'Acadea California Trip',
+      desc: 'Interactive itinerary and route planner for a week-long California customer visit covering EBRs across community colleges.',
+      tags: ['Trip Planner'],
+      order: 4,
+    },
+    'wife-date-reminder': {
+      title: 'Wife Date Reminder',
+      desc: 'A personal reminder tool — because some things are too important to forget.',
+      tags: ['Personal'],
+      order: 5,
+    },
+  };
+
+  // ── Helpers ──
+
+  function slugToTitle(slug) {
+    return slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>';
+
+  function buildCard(repo, index) {
+    const e = ENRICHMENT[repo.name] || {};
+    const title = e.title || slugToTitle(repo.name);
+    const desc  = e.desc  || repo.description || '';
+    const url   = e.url   || repo.html_url;
+    const lang  = repo.language || 'Code';
+    const isLive = e.live || false;
+    const extra  = e.tags || [];
+    const delay  = 0.8 + index * 0.1;
+
+    let tags = `<span class="tag tag--lang">${lang}</span>`;
+    if (isLive) tags += '<span class="tag tag--live">Live</span>';
+    extra.forEach(t => { tags += `<span class="tag tag--tool">${t}</span>`; });
+
+    return `<a class="project-card" href="${url}" target="_blank" rel="noopener" style="animation-delay:${delay}s">
+      <div>
+        <h2 class="project-card__title">${title}</h2>
+        ${desc ? `<p class="project-card__desc">${desc}</p>` : ''}
+        <div class="project-card__meta">${tags}</div>
+      </div>
+      <div class="project-card__arrow">${ARROW}</div>
+    </a>`;
+  }
+
+  // ── Fetch & Render ──
+
+  async function loadProjects() {
+    const loading = document.getElementById('projects-loading');
+    const grid    = document.getElementById('projects-grid');
+    const footer  = document.getElementById('footer');
+
+    try {
+      const res = await fetch(
+        `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=100`
+      );
+      if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+      const repos = await res.json();
+
+      // Sort: enriched repos by order first, then remaining by last updated
+      repos.sort((a, b) => {
+        const oa = ENRICHMENT[a.name]?.order ?? 999;
+        const ob = ENRICHMENT[b.name]?.order ?? 999;
+        if (oa !== ob) return oa - ob;
+        return new Date(b.updated_at) - new Date(a.updated_at);
+      });
+
+      // Skip forks unless enriched
+      const filtered = repos.filter(r => !r.fork || ENRICHMENT[r.name]);
+
+      grid.innerHTML = filtered.map((r, i) => buildCard(r, i)).join('');
+      loading.style.display = 'none';
+      grid.style.display = 'grid';
+
+      // Show footer after last card animation
+      const footerDelay = 0.8 + filtered.length * 0.1 + 0.3;
+      setTimeout(() => footer.classList.add('visible'), footerDelay * 1000);
+
+    } catch (err) {
+      console.error('Failed to load repos:', err);
+      loading.innerHTML =
+        'Could not load projects — <a href="https://github.com/' +
+        GITHUB_USER + '" style="color:var(--accent)">view on GitHub</a>';
+      footer.classList.add('visible');
+    }
+  }
+
+  loadProjects();
+})();
+</script>
+
+</body>
+</html>
