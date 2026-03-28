@@ -281,9 +281,86 @@
     .project-card__arrow { display: none; }
     .projects { gap: 14px; }
   }
+
+  /* ── Dark mode ── */
+  html.dark {
+    --bone: #100e0b;
+    --ink: #ede8dd;
+    --warm-gray: #9e988f;
+    --accent: #c99a10;
+    --accent-soft: rgba(201,154,16,0.15);
+    --card-bg: rgba(22,19,15,0.9);
+    --card-border: rgba(237,232,221,0.07);
+    --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.5);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.5), 0 16px 40px rgba(0,0,0,0.6);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bone: #100e0b;
+      --ink: #ede8dd;
+      --warm-gray: #9e988f;
+      --accent: #c99a10;
+      --accent-soft: rgba(201,154,16,0.15);
+      --card-bg: rgba(22,19,15,0.9);
+      --card-border: rgba(237,232,221,0.07);
+      --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.5);
+      --shadow-hover: 0 2px 8px rgba(0,0,0,0.5), 0 16px 40px rgba(0,0,0,0.6);
+    }
+  }
+  html.light {
+    --bone: #f5f0e8;
+    --ink: #1a1714;
+    --warm-gray: #8a8278;
+    --accent: #b8860b;
+    --accent-soft: rgba(184,134,11,0.12);
+    --card-bg: rgba(255,252,247,0.7);
+    --card-border: rgba(26,23,20,0.06);
+    --shadow: 0 1px 3px rgba(26,23,20,0.04), 0 8px 24px rgba(26,23,20,0.06);
+    --shadow-hover: 0 2px 8px rgba(26,23,20,0.06), 0 16px 40px rgba(26,23,20,0.1);
+  }
+  html.dark .tag--live { background: rgba(76,175,80,0.12); color: #6abf6e; }
+  html.dark .tag--tool { background: rgba(237,232,221,0.06); color: var(--warm-gray); }
+
+  /* ── Theme toggle ── */
+  .theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 100;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--warm-gray);
+    transition: all 0.25s ease;
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out 1s forwards;
+  }
+  .theme-toggle:hover {
+    border-color: rgba(184,134,11,0.2);
+    color: var(--accent);
+    transform: scale(1.08);
+  }
+  .theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+  html.dark .theme-toggle .icon-sun { display: block; }
+  html.dark .theme-toggle .icon-moon { display: none; }
 </style>
 </head>
 <body>
+
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
 
 <div class="bg-shape bg-shape--1"></div>
 <div class="bg-shape bg-shape--2"></div>
@@ -461,6 +538,25 @@
   }
 
   loadProjects();
+})();
+
+(function() {
+  const btn = document.getElementById('theme-toggle');
+  const stored = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let dark = stored ? stored === 'dark' : prefersDark;
+
+  function apply() {
+    document.documentElement.classList.toggle('dark', dark);
+    document.documentElement.classList.toggle('light', !dark);
+  }
+
+  apply();
+  btn.addEventListener('click', () => {
+    dark = !dark;
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    apply();
+  });
 })();
 </script>
 
