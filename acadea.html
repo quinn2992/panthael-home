@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panthael.ai</title>
+<title>Acadea · Panthael.ai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -107,20 +107,6 @@
     opacity: 0;
     animation: fadeUp 0.8s ease-out 0.3s forwards;
   }
-  .hero__meaning {
-    margin-top: 28px;
-    font-size: 0.82rem;
-    color: var(--warm-gray);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeUp 0.8s ease-out 0.5s forwards;
-  }
-  .hero__meaning em {
-    font-style: normal;
-    color: var(--accent);
-    font-weight: 500;
-  }
   .hero__divider {
     width: 48px;
     height: 1px;
@@ -139,27 +125,6 @@
     padding-left: 2px;
     opacity: 0;
     animation: fadeUp 0.6s ease-out 0.7s forwards;
-  }
-
-  /* ── Loading ── */
-  .loading {
-    text-align: center;
-    padding: 60px 0;
-    color: var(--warm-gray);
-    font-size: 0.88rem;
-    letter-spacing: 0.04em;
-    opacity: 0;
-    animation: fadeUp 0.6s ease-out 0.8s forwards;
-  }
-  .loading__dots::after {
-    content: '';
-    animation: dots 1.4s steps(4,end) infinite;
-  }
-  @keyframes dots {
-    0% { content: ''; }
-    25% { content: '.'; }
-    50% { content: '..'; }
-    75% { content: '...'; }
   }
 
   /* ── Project grid ── */
@@ -255,8 +220,8 @@
     text-align: center;
     padding: 0 0 60px;
     opacity: 0;
+    animation: fadeUp 0.6s ease-out 1.6s forwards;
   }
-  .footer.visible { animation: fadeUp 0.6s ease-out forwards; }
   .footer__line {
     width: 48px; height: 1px;
     background: var(--card-border);
@@ -368,176 +333,70 @@
 <div class="container">
 
   <header class="hero">
-    <h1 class="hero__wordmark">Panthael<span>.</span>ai</h1>
-    <p class="hero__sub">Projects &amp; tools by Quinn</p>
-    <p class="hero__meaning">From Sindarin — <em>Pant</em> (full) + <em>Hael</em> (wise) — "Fullwise"</p>
+    <h1 class="hero__wordmark">Acadea</h1>
+    <p class="hero__sub">Tools built for Acadea customers &amp; work</p>
     <div class="hero__divider"></div>
   </header>
 
   <p class="section-label">Projects</p>
 
-  <div id="projects-loading" class="loading">
-    Loading projects<span class="loading__dots"></span>
-  </div>
+  <section class="projects">
 
-  <section id="projects-grid" class="projects" style="display:none;"></section>
+    <a class="project-card" href="https://acadea.panthael.ai/ticketagent" target="_blank" rel="noopener" style="animation-delay:0.8s">
+      <div>
+        <h2 class="project-card__title">Acadea Ticket Agent</h2>
+        <p class="project-card__desc">AI drafting assistant for Acadea customers — interviews, drafts a Zendesk ticket, hands customer the copy-paste block.</p>
+        <div class="project-card__meta"><span class="tag tag--lang">Python</span><span class="tag tag--live">Live</span></div>
+      </div>
+      <div class="project-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></div>
+    </a>
 
-  <footer id="footer" class="footer">
+    <a class="project-card" href="https://ada.panthael.ai/" target="_blank" rel="noopener" style="animation-delay:0.9s">
+      <div>
+        <h2 class="project-card__title">ADA Checker</h2>
+        <p class="project-card__desc">Accessibility re-checker tool built for Acadea customers to verify ADA compliance across their CurriQUnet instances.</p>
+        <div class="project-card__meta"><span class="tag tag--lang">JavaScript</span><span class="tag tag--live">Live</span><span class="tag tag--tool">Acadea · Internal</span></div>
+      </div>
+      <div class="project-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></div>
+    </a>
+
+    <a class="project-card" href="https://higheredsaas.panthael.ai" target="_blank" rel="noopener" style="animation-delay:1.0s">
+      <div>
+        <h2 class="project-card__title">Higher Ed SaaS Map</h2>
+        <p class="project-card__desc">Interactive industry map of B2B SaaS vendors serving higher education — curriculum management, SIS, LMS, and more.</p>
+        <div class="project-card__meta"><span class="tag tag--lang">HTML</span><span class="tag tag--live">Live</span><span class="tag tag--tool">Vercel</span></div>
+      </div>
+      <div class="project-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></div>
+    </a>
+
+    <a class="project-card" href="https://calitrip.panthael.ai/" target="_blank" rel="noopener" style="animation-delay:1.1s">
+      <div>
+        <h2 class="project-card__title">Acadea California Trip</h2>
+        <p class="project-card__desc">Interactive itinerary and route planner for a week-long California customer visit covering EBRs across community colleges.</p>
+        <div class="project-card__meta"><span class="tag tag--lang">HTML</span><span class="tag tag--live">Live</span><span class="tag tag--tool">Trip Planner</span></div>
+      </div>
+      <div class="project-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></div>
+    </a>
+
+    <a class="project-card" href="https://kali.panthael.ai" target="_blank" rel="noopener" style="animation-delay:1.2s">
+      <div>
+        <h2 class="project-card__title">AI Kali</h2>
+        <p class="project-card__desc">AI-powered Kali Linux security assistant.</p>
+        <div class="project-card__meta"><span class="tag tag--lang">JavaScript</span><span class="tag tag--live">Live</span></div>
+      </div>
+      <div class="project-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></div>
+    </a>
+
+  </section>
+
+  <footer class="footer">
     <div class="footer__line"></div>
-    <p class="footer__text">Built in Saigon · <a href="https://github.com/quinn2992" target="_blank" rel="noopener">GitHub</a> · <a href="/acadea">Acadea</a></p>
+    <p class="footer__text"><a href="/">Panthael.ai</a> · Built in Saigon</p>
   </footer>
 
 </div>
 
 <script>
-(function() {
-  const GITHUB_USER = 'quinn2992';
-
-  // ╭──────────────────────────────────────────────────────────────────╮
-  // │  ENRICHMENT CONFIG                                              │
-  // │                                                                 │
-  // │  To add a new project with rich metadata, just add an entry     │
-  // │  here keyed by the GitHub repo name. Any repo NOT listed        │
-  // │  still appears automatically with its GitHub description.       │
-  // │                                                                 │
-  // │  Fields:                                                        │
-  // │    title  - Display name (otherwise derived from repo slug)     │
-  // │    desc   - Description (otherwise uses GitHub description)     │
-  // │    url    - Live URL (otherwise links to GitHub repo)           │
-  // │    tags   - Extra tags like framework or category               │
-  // │    live   - true = shows green "Live" badge                     │
-  // │    order  - Sort priority (lower = higher on page)              │
-  // ╰──────────────────────────────────────────────────────────────────╯
-
-  const ENRICHMENT = {
-    'daily-readings': {
-      title: 'Daily Readings',
-      desc: 'Daily Catholic Mass readings displayed in the New Living Translation. Built with Next.js and powered by API.Bible.',
-      url: 'https://dailyreadings.panthael.ai',
-      github: 'https://github.com/quinn2992/daily-readings',
-      tags: ['Next.js · Vercel'],
-      live: true,
-      order: 0,
-    },
-    'filelink': {
-      title: 'Filelink',
-      desc: 'Clickable links to local Mac files & folders in Notion — right-click → Copy Filelink → paste.',
-      url: 'https://fl.panthael.ai',
-      live: true,
-      order: 1,
-    },
-    'chunom-translator': {
-      title: 'ChuNom Translator',
-      desc: 'A Vietnamese Chữ Nôm translation tool for deciphering historical Vietnamese script.',
-      url: 'https://chunom.panthael.ai',
-      live: true,
-      order: 2,
-    },
-    'wife-date-reminder': {
-      title: 'Wife Date Reminder',
-      desc: 'A personal reminder tool — because some things are too important to forget.',
-      tags: ['Personal'],
-      url: 'https://dates.panthael.ai/',
-      live: true,
-      order: 3,
-    },
-    'k-id-pipeline': {
-      title: 'k-ID Pipeline',
-      desc: 'k-ID Vietnam Sales Pipeline Dashboard',
-      url: 'https://k-id.panthael.ai/',
-      live: true,
-      order: 4,
-    },
-  };
-
-  // ── Helpers ──
-
-  function slugToTitle(slug) {
-    return slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  }
-
-  const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>';
-
-  function buildCard(repo, index) {
-    const e = ENRICHMENT[repo.name] || {};
-    const title = e.title || slugToTitle(repo.name);
-    const desc  = e.desc  || repo.description || '';
-    const url   = e.url   || repo.html_url;
-    const lang  = repo.language || 'Code';
-    const isLive = e.live || false;
-    const extra  = e.tags || [];
-    const delay  = 0.8 + index * 0.1;
-
-    let tags = `<span class="tag tag--lang">${lang}</span>`;
-    if (isLive) tags += '<span class="tag tag--live">Live</span>';
-    extra.forEach(t => { tags += `<span class="tag tag--tool">${t}</span>`; });
-
-    return `<a class="project-card" href="${url}" target="_blank" rel="noopener" style="animation-delay:${delay}s">
-      <div>
-        <h2 class="project-card__title">${title}</h2>
-        ${desc ? `<p class="project-card__desc">${desc}</p>` : ''}
-        <div class="project-card__meta">${tags}</div>
-      </div>
-      <div class="project-card__arrow">${ARROW}</div>
-    </a>`;
-  }
-
-  // ── Fetch & Render ──
-
-  async function loadProjects() {
-    const loading = document.getElementById('projects-loading');
-    const grid    = document.getElementById('projects-grid');
-    const footer  = document.getElementById('footer');
-
-    try {
-      const res = await fetch(
-        `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=100`
-      );
-      if (!res.ok) throw new Error(`GitHub API ${res.status}`);
-      const repos = await res.json();
-
-      // Add synthetic entries for enriched repos not returned by the API (e.g. private repos)
-      const apiNames = new Set(repos.map(r => r.name));
-      Object.entries(ENRICHMENT).forEach(([name, e]) => {
-        if (!apiNames.has(name)) {
-          repos.push({ name, fork: false, language: null, html_url: e.github || `https://github.com/${GITHUB_USER}/${name}`, updated_at: '' });
-        }
-      });
-
-      // Sort: enriched repos by order first, then remaining by last updated
-      repos.sort((a, b) => {
-        const oa = ENRICHMENT[a.name]?.order ?? 999;
-        const ob = ENRICHMENT[b.name]?.order ?? 999;
-        if (oa !== ob) return oa - ob;
-        return new Date(b.updated_at) - new Date(a.updated_at);
-      });
-
-      // Acadea-related repos live on /acadea instead of the homepage
-      const HIDDEN = new Set(['panthael-home', 'acadea-ticket-agent', 'ada-checker', 'higher-ed-saas-map', 'acadea-cali-trip', 'kali-ai']);
-
-      // Skip forks unless enriched; skip hidden repos
-      const filtered = repos.filter(r => !HIDDEN.has(r.name) && (!r.fork || ENRICHMENT[r.name]));
-
-      grid.innerHTML = filtered.map((r, i) => buildCard(r, i)).join('');
-      loading.style.display = 'none';
-      grid.style.display = 'grid';
-
-      // Show footer after last card animation
-      const footerDelay = 0.8 + filtered.length * 0.1 + 0.3;
-      setTimeout(() => footer.classList.add('visible'), footerDelay * 1000);
-
-    } catch (err) {
-      console.error('Failed to load repos:', err);
-      loading.innerHTML =
-        'Could not load projects — <a href="https://github.com/' +
-        GITHUB_USER + '" style="color:var(--accent)">view on GitHub</a>';
-      footer.classList.add('visible');
-    }
-  }
-
-  loadProjects();
-})();
-
 (function() {
   const btn = document.getElementById('theme-toggle');
   const stored = localStorage.getItem('theme');
