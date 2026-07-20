@@ -513,7 +513,7 @@
       });
 
       // Acadea-related repos live on /acadea instead of the homepage
-      const HIDDEN = new Set(['panthael-home', 'acadea-ticket-agent', 'ada-checker', 'higher-ed-saas-map', 'acadea-cali-trip', 'kali-ai']);
+      const HIDDEN = new Set(['panthael-home', 'panthael-labs', 'acadea-ticket-agent', 'ada-checker', 'higher-ed-saas-map', 'acadea-cali-trip', 'kali-ai']);
 
       // Skip forks unless enriched; skip hidden repos
       const filtered = repos.filter(r => !HIDDEN.has(r.name) && (!r.fork || ENRICHMENT[r.name]));
